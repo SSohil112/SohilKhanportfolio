@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
     <title>PrimeCuts — Professional Video Editor</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.css">
@@ -31,7 +31,10 @@
         ::-webkit-scrollbar { width:4px; }
         ::-webkit-scrollbar-track { background:#050505; }
         ::-webkit-scrollbar-thumb { background:#1f1f1f; border-radius:10px; }
-        body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+        body {
+            background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; overflow-x:hidden; -webkit-font-smoothing:antialiased;
+            display: flex; flex-direction: column; min-height: 100vh;
+        }
         body.has-cursor { cursor:none; }
 
         .film-grain { position:fixed; inset:0; pointer-events:none; z-index:9990; animation:grainShift 0.08s steps(1) infinite; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E"); background-repeat:repeat; background-size:200px 200px; opacity:0.5; mix-blend-mode:overlay; }
@@ -66,10 +69,9 @@
 
         .hero { min-height:100vh; display:flex; align-items:center; padding:160px 80px 100px; position:relative; overflow:hidden; z-index:2; }
         .hero-video-bg { position:absolute; inset:0; z-index:0; overflow:hidden; }
-        .hero-video-bg iframe { width:100%; height:100%; object-fit:cover; opacity:0.25; border:none; }
         .hero-video-bg::after { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 80% 60% at 60% 40%,rgba(232,201,125,0.04) 0%,transparent 70%),linear-gradient(180deg,rgba(5,5,5,0.3) 0%,rgba(5,5,5,0.7) 100%); }
         .hero-bg-text { position:absolute; font-family:'Bebas Neue',sans-serif; font-size:clamp(130px,22vw,300px); color:rgba(255,255,255,0.015); top:50%; left:50%; transform:translate(-50%,-50%); white-space:nowrap; letter-spacing:15px; pointer-events:none; user-select:none; z-index:1; }
-        .hero-layout { display:grid; grid-template-columns:1fr 420px; gap:100px; align-items:center; width:100%; position:relative; z-index:2; }
+        .hero-layout { display:grid; grid-template-columns:1fr 380px; gap:100px; align-items:center; width:100%; position:relative; z-index:2; }
         .hero-content { animation:fadeInUp 0.9s cubic-bezier(0.165,0.84,0.44,1) forwards; }
         @keyframes fadeInUp { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
         @keyframes fadeInRight { from{opacity:0;transform:translateX(50px)} to{opacity:1;transform:translateX(0)} }
@@ -85,22 +87,19 @@
         .hero-btn-sec { padding:18px 48px; background:transparent; color:var(--text); border:1px solid var(--border); text-decoration:none; font-weight:500; font-size:0.82rem; letter-spacing:2.5px; text-transform:uppercase; border-radius:3px; transition:all 0.35s; font-family:'DM Sans',sans-serif; }
         .hero-btn-sec:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
 
-        .reel-card-wrapper { perspective:1000px; animation:fadeInRight 0.8s 0.35s cubic-bezier(0.165,0.84,0.44,1) both; }
-        .reel-card-inner { position:relative; aspect-ratio:9/16; border-radius:20px; overflow:hidden; border:1px solid var(--border); background:var(--surface); box-shadow:0 40px 80px rgba(0,0,0,0.7),0 0 0 1px rgba(255,255,255,0.03) inset; transition:transform 0.15s ease-out,box-shadow 0.5s; transform-style:preserve-3d; will-change:transform; cursor:pointer; }
-        .reel-card-inner:hover { box-shadow:0 50px 100px rgba(0,0,0,0.8),0 0 60px rgba(232,201,125,0.07),0 0 0 1px rgba(255,255,255,0.06) inset; }
-        .reel-card-inner iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:none; z-index:1; }
-        .reel-overlay { position:absolute; inset:0; z-index:2; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; background:rgba(0,0,0,0.38); transition:opacity 0.45s cubic-bezier(0.165,0.84,0.44,1); cursor:pointer; }
-        .reel-overlay.hidden { opacity:0; pointer-events:none; }
-        .play-btn { width:64px; height:64px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center; font-size:1.3rem; color:#000; box-shadow:0 0 40px rgba(232,201,125,0.45); transition:transform 0.3s,box-shadow 0.3s; }
-        .reel-overlay:hover .play-btn { transform:scale(1.12); box-shadow:0 0 60px rgba(232,201,125,0.65); }
-        .reel-label { text-align:center; font-size:0.72rem; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.8); line-height:1.6; }
-        .reel-label small { display:block; color:var(--accent); font-size:0.62rem; letter-spacing:1.5px; margin-top:4px; }
-        .reel-card-brand { position:absolute; bottom:0; left:0; right:0; padding:20px 18px 16px; background:linear-gradient(0deg,rgba(0,0,0,0.7) 0%,transparent 100%); display:flex; align-items:center; gap:10px; z-index:3; }
-        .reel-card-brand-dot { width:7px; height:7px; background:var(--accent); border-radius:50%; animation:logoPulse 2s infinite; }
-        .reel-card-brand-name { font-family:'Bebas Neue',sans-serif; font-size:1rem; letter-spacing:3px; color:var(--text); }
-        .badge { position:absolute; background:rgba(8,8,8,0.92); border:1px solid var(--border); backdrop-filter:blur(14px); border-radius:12px; padding:12px 20px; display:flex; align-items:center; gap:10px; animation:floatBadge 5s ease-in-out infinite; box-shadow:0 8px 30px rgba(0,0,0,0.5); z-index:3; }
-        .badge-top { top:18px; left:-38px; animation-delay:0s; }
-        .badge-bottom { bottom:60px; right:-38px; animation-delay:1.5s; }
+        /* HERO IMAGE CARD (REPLACEMENT) */
+        .hero-image-card-wrapper { perspective:1000px; animation:fadeInRight 0.8s 0.35s cubic-bezier(0.165,0.84,0.44,1) both; display:flex; flex-direction:column; align-items:center; gap:28px; }
+        .hero-image-card { position:relative; width:100%; max-width:320px; aspect-ratio:3/4; border-radius:20px; overflow:hidden; border:1px solid var(--border); background:var(--surface); box-shadow:0 40px 80px rgba(0,0,0,0.7),0 0 0 1px rgba(255,255,255,0.03) inset; transition:transform 0.3s; }
+        .hero-image-card:hover { transform:scale(1.02) translateY(-6px); box-shadow:0 50px 100px rgba(0,0,0,0.8),0 0 60px rgba(232,201,125,0.1); }
+        .hero-image-card img { width:100%; height:100%; object-fit:cover; }
+        .hero-image-frame { position:absolute; inset:16px; border:1px solid rgba(232,201,125,0.18); border-radius:4px; pointer-events:none; transition:border-color 0.4s; }
+        .hero-image-card:hover .hero-image-frame { border-color:rgba(232,201,125,0.4); }
+        .hero-image-badge { position:absolute; bottom:18px; right:18px; background:var(--accent); color:#000; padding:12px 20px; border-radius:12px; font-weight:700; font-size:0.8rem; text-align:center; line-height:1.3; box-shadow:0 10px 30px rgba(0,0,0,0.5); z-index:2; }
+        .hero-image-badge span { display:block; font-size:1.8rem; font-family:'Bebas Neue',sans-serif; }
+        .badge-wrapper { display:flex; gap:20px; width:100%; justify-content:center; flex-wrap:wrap; }
+        .badge-hero { background:rgba(8,8,8,0.92); border:1px solid var(--border); backdrop-filter:blur(14px); border-radius:12px; padding:12px 20px; display:flex; align-items:center; gap:10px; animation:floatBadge 5s ease-in-out infinite; box-shadow:0 8px 30px rgba(0,0,0,0.5); }
+        .badge-hero:first-child { animation-delay:0s; }
+        .badge-hero:last-child { animation-delay:1.5s; }
         @keyframes floatBadge { 0%,100%{transform:translateY(0)} 25%{transform:translateY(-8px)} 50%{transform:translateY(-3px)} 75%{transform:translateY(-10px)} }
         .badge-icon { font-size:1.3rem; }
         .badge-text { font-size:0.72rem; letter-spacing:0.5px; white-space:nowrap; }
@@ -118,11 +117,11 @@
         .section-label { font-size:0.66rem; letter-spacing:5px; text-transform:uppercase; color:var(--accent); margin-bottom:16px; display:block; }
         .section-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(42px,5vw,72px); letter-spacing:3px; line-height:0.93; }
 
-        /* ── SWIPER ── */
+        /* SWIPER */
         .swiper-section { padding:140px 80px 140px; position:relative; z-index:2; }
         .swiper { border-radius:16px; overflow:hidden; border:1px solid var(--border); height:580px; box-shadow:0 20px 60px rgba(0,0,0,0.5); }
-        .swiper-slide { display:grid; grid-template-columns:326px 1fr; background:var(--card); height:100%; }
-        .slide-visual { position:relative; overflow:hidden; background:#000; width:326px; height:100%; flex-shrink:0; }
+        .swiper-slide { display:grid; grid-template-columns:420px 1fr; background:var(--card); height:100%; }
+        .slide-visual { position:relative; overflow:hidden; background:#000; width:100%; height:100%; flex-shrink:0; }
         .slide-iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:none; z-index:1; display:block; }
 
         .slide-content { padding:55px 50px; display:flex; flex-direction:column; justify-content:center; overflow:hidden; }
@@ -247,32 +246,19 @@
         .about-sig { font-family:'Playfair Display',serif; font-style:italic; font-size:2.2rem; color:var(--text); margin-top:30px; opacity:0.8; }
 
         .contact-section { padding:var(--section-pad); border-top:1px solid var(--border); position:relative; z-index:2; }
-        .contact-layout { display:grid; grid-template-columns:1fr 1fr; gap:80px; }
+        .contact-centered { max-width:720px; margin:0 auto; text-align:center; }
         .contact-heading { font-family:'Bebas Neue',sans-serif; font-size:clamp(52px,6vw,90px); letter-spacing:3px; line-height:0.93; margin-bottom:32px; }
         .contact-heading span { color:var(--accent); text-shadow:0 0 40px rgba(232,201,125,0.2); }
         .contact-desc { color:var(--muted); line-height:1.95; font-size:0.95rem; margin-bottom:44px; }
-        .contact-detail { display:flex; align-items:center; gap:22px; margin-bottom:26px; transition:transform 0.3s; }
+        .contact-detail { display:flex; align-items:center; gap:22px; margin-bottom:26px; justify-content:center; transition:transform 0.3s; }
         .contact-detail:hover { transform:translateX(6px); }
         .contact-ic { width:50px; height:50px; border-radius:50%; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; color:var(--accent); font-size:1rem; background:rgba(232,201,125,0.04); transition:all 0.3s; }
         .contact-detail:hover .contact-ic { border-color:var(--accent); box-shadow:0 0 16px rgba(232,201,125,0.15); }
         .contact-detail-text h4 { font-size:0.75rem; letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; }
         .contact-detail-text p { color:var(--muted); font-size:0.9rem; }
-        .socials { display:flex; gap:14px; margin-top:40px; }
+        .socials { display:flex; gap:14px; margin-top:40px; justify-content:center; }
         .social-btn { width:48px; height:48px; border-radius:50%; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:1rem; text-decoration:none; transition:all 0.35s; }
         .social-btn:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-4px); }
-        .form-row { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
-        .form-group { display:flex; flex-direction:column; gap:10px; margin-bottom:18px; }
-        .form-label { font-size:0.68rem; letter-spacing:2px; text-transform:uppercase; color:var(--muted); }
-        .form-input,.form-textarea { padding:15px 20px; background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:6px; color:var(--text); font-size:0.9rem; font-family:'DM Sans',sans-serif; transition:all 0.3s; width:100%; }
-        .form-input:focus,.form-textarea:focus { outline:none; border-color:var(--accent); background:rgba(232,201,125,0.03); box-shadow:0 0 20px rgba(232,201,125,0.06); }
-        .form-textarea { resize:vertical; min-height:140px; }
-        .submit-btn { padding:17px; background:var(--accent); color:#000; border:none; border-radius:6px; font-size:0.82rem; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; cursor:pointer; transition:all 0.35s; font-family:'DM Sans',sans-serif; display:flex; align-items:center; justify-content:center; gap:10px; box-shadow:0 6px 24px rgba(232,201,125,0.18); width:100%; }
-        .submit-btn:hover { background:#fff; transform:translateY(-3px); box-shadow:0 12px 36px rgba(232,201,125,0.3); }
-        .thankyou-msg { display:none; text-align:center; padding:60px 40px; background:rgba(232,201,125,0.04); border:1px solid rgba(232,201,125,0.2); border-radius:16px; }
-        .thankyou-msg.active { display:block; animation:fadeInUp 0.6s cubic-bezier(0.165,0.84,0.44,1); }
-        .thankyou-msg .ty-icon { font-size:3rem; margin-bottom:20px; }
-        .thankyou-msg h3 { font-family:'Bebas Neue',sans-serif; font-size:2.2rem; letter-spacing:3px; color:var(--accent); margin-bottom:14px; }
-        .thankyou-msg p { color:var(--muted); font-size:1rem; line-height:1.8; font-family:'Playfair Display',serif; font-style:italic; }
 
         footer { padding:80px; border-top:1px solid var(--border); display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:40px; position:relative; z-index:2; }
         .footer-logo { font-family:'Bebas Neue',sans-serif; font-size:1.9rem; letter-spacing:5px; }
@@ -308,21 +294,18 @@
             .mobile-menu-btn { display:block; }
             .hero { padding:120px 28px 60px; }
             .hero-layout { grid-template-columns:1fr; }
-            .reel-card-wrapper { max-width:280px; margin:0 auto; }
-            .badge-top { left:-10px; top:10px; }
-            .badge-bottom { right:-10px; bottom:45px; }
+            .hero-image-card-wrapper { max-width:280px; margin:0 auto; }
             .stats-section { grid-template-columns:repeat(2,1fr); padding:60px 28px; }
             .stat-item { border-right:none; border-bottom:1px solid var(--border); }
             .swiper-section { padding:60px 28px 80px; }
             .swiper { height:auto; }
             .swiper-slide { grid-template-columns:1fr; }
-            .slide-visual { width:100%; aspect-ratio:16/9; height:auto; min-height:220px; position:relative; }
+            .slide-visual { width:100%; aspect-ratio:16/9; height:auto; min-height:220px; }
             .slide-content { padding:36px 28px; }
             .services-grid { grid-template-columns:1fr; }
             .clients-grid { grid-template-columns:repeat(2,1fr); gap:14px; }
             .about-layout { grid-template-columns:1fr; gap:60px; }
-            .contact-layout { grid-template-columns:1fr; gap:60px; }
-            .form-row { grid-template-columns:1fr; }
+            .contact-centered { max-width:100%; padding:0 20px; }
             footer { grid-template-columns:1fr; text-align:center; padding:50px 28px; }
             .footer-links { justify-content:center; }
             .skill-slide-card { min-width:250px; padding:32px 24px; }
@@ -333,6 +316,7 @@
             .client-card { border-radius:10px; }
             .faq-q-text { font-size:0.95rem; }
             .faq-icon { width:36px; height:36px; font-size:0.8rem; }
+            .hero-image-card-wrapper { max-width:240px; }
         }
     </style>
 </head>
@@ -378,7 +362,6 @@
     <div class="hero-video-bg">
         <div style="position:absolute;inset:0;">
             <iframe src="https://play.gumlet.io/embed/69f5f037609709b32f7c39aa?autoplay=true&mute=true&loop=true&background=true"
-
                     frameborder="0"
                     allow="autoplay; fullscreen; picture-in-picture"
                     style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.25;pointer-events:none;"
@@ -398,25 +381,16 @@
             </div>
         </div>
 
-        <div class="reel-card-wrapper" id="reelCardWrapper">
-            <div class="reel-card-inner" id="reelCardInner">
-                <iframe id="heroVimeoIframe"
-                        src="https://play.gumlet.io/embed/69f5b957609709b32f788ff8?background=false&autoplay=false&loop=false&disable_player_controls=false"
-
-                        frameborder="0"
-                        allow="autoplay; fullscreen; picture-in-picture"
-                        title="Featured Reel"></iframe>
-                <div class="reel-overlay" id="vimeoOverlay">
-                    <div class="play-btn"><i class="fas fa-play"></i></div>
-                    <div class="reel-label">Featured Reel<small>Click to Play with Sound</small></div>
-                </div>
-                <div class="reel-card-brand">
-                    <div class="reel-card-brand-dot"></div>
-                    <span class="reel-card-brand-name">PrimeCuts</span>
-                </div>
+        <div class="hero-image-card-wrapper">
+            <div class="hero-image-card">
+                <img src="https://i.postimg.cc/85D3Ljr5/IMG-4804-JPG.jpg" alt="Sohil Khan - PrimeCuts Editor">
+                <div class="hero-image-frame"></div>
+                <div class="hero-image-badge"><span>5+</span>Years<br>Exp.</div>
             </div>
-            <div class="badge badge-top"><div class="badge-icon">🎬</div><div class="badge-text"><strong>30+ Projects</strong>Delivered</div></div>
-            <div class="badge badge-bottom"><div class="badge-icon">⭐</div><div class="badge-text"><strong>5.0 Rating</strong>Client Satisfaction</div></div>
+            <div class="badge-wrapper">
+                <div class="badge-hero"><div class="badge-icon">🎬</div><div class="badge-text"><strong>30+ Projects</strong>Delivered</div></div>
+                <div class="badge-hero"><div class="badge-icon">⭐</div><div class="badge-text"><strong>5.0 Rating</strong>Client Love</div></div>
+            </div>
         </div>
     </div>
 </section>
@@ -441,7 +415,7 @@
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
 
-            <!-- SLIDE 1 — VIMEO -->
+            <!-- SLIDE 1 (existing) -->
             <div class="swiper-slide">
                 <div class="slide-visual">
                     <iframe class="slide-iframe"
@@ -454,14 +428,36 @@
                 </div>
                 <div class="slide-content">
                     <div class="slide-num">01</div>
-                    <span class="slide-tag">Instagram Reels</span>
-                    <h3 class="slide-title">Add Your Reel Title Here</h3>
-                    <p class="slide-desc">Describe this reel's story here — who was the client, what was the goal, and what results were achieved through the edit.</p>
+                    <span class="slide-tag">Show Reels</span>
+                    <h3 class="slide-title">High-Impact Social Media Edit</h3>
+                    <p class="slide-desc">A high-impact compilation featuring cinematic edits for diverse brands, focusing on narrative flow and professional color grading to elevate brand identity.</p>
                     <button class="slide-btn sound-hover" data-slide="1">Watch Reel <i class="fas fa-play"></i></button>
                 </div>
             </div>
 
-            <!-- SLIDE 2 — GUMLET (Converted from YouTube) -->
+<div class="swiper-slide">
+    <div class="slide-visual">
+        <iframe class="slide-iframe"
+                id="slide-iframe-2"
+                data-video-type="drive"
+                src="https://play.gumlet.io/embed/69f5b957609709b32f788ff8?background=false&autoplay=false&loop=false&disable_player_controls=false"
+
+                allow="autoplay; fullscreen"
+                allowfullscreen
+                frameborder="0"></iframe>
+    </div>
+    <div class="slide-content">
+        <div class="slide-num">02</div>
+        <span class="slide-tag">Luxury Real Estate</span>
+        <h3 class="slide-title">International Real Estate Showcase</h3>
+        <p class="slide-desc">A high-end real estate promo featuring cinematic typography and clean visual storytelling. This project focuses on high-retention editing techniques tailored for global property markets and luxury real estate branding.</p>
+        <button class="slide-btn sound-hover" data-slide="2">
+            Watch Reel <i class="fas fa-play"></i>
+        </button>
+    </div>
+</div>
+
+            <!-- SLIDE 2 (original, now slide 3) -->
             <div class="swiper-slide">
                 <div class="slide-visual">
                     <iframe class="slide-iframe"
@@ -472,19 +468,16 @@
                             allowfullscreen
                             frameborder="0"></iframe>
                 </div>
-
                 <div class="slide-content">
-                    <div class="slide-num">02</div>
-                    <span class="slide-tag">YouTube Edit</span>
-                    <h3 class="slide-title">Add Your Reel Title Here</h3>
-                    <p class="slide-desc">Describe this reel's story here — who was the client, what was the goal, and what results were achieved through the edit.</p>
-                    <button class="slide-btn sound-hover" data-slide="2">
-                        Watch Reel <i class="fas fa-play"></i>
-                    </button>
+                    <div class="slide-num">03</div>
+                    <span class="slide-tag">Performance Marketing</span>
+                    <h3 class="slide-title">Trading & Finance Meta Ad</h3>
+                    <p class="slide-desc">High-converting Meta Ad edited for a professional trading mentor. Designed with dynamic call-outs and clean graphics to simplify complex market behavior.</p>
+                    <button class="slide-btn sound-hover" data-slide="2">Watch Reel <i class="fas fa-play"></i></button>
                 </div>
             </div>
 
-            <!-- SLIDE 3 — GUMLET (Converted from YouTube) -->
+            <!-- SLIDE 3 (original, now slide 4) -->
             <div class="swiper-slide">
                 <div class="slide-visual">
                     <iframe class="slide-iframe"
@@ -495,19 +488,16 @@
                             allowfullscreen
                             frameborder="0"></iframe>
                 </div>
-
                 <div class="slide-content">
-                    <div class="slide-num">03</div>
-                    <span class="slide-tag">Cinematic Film</span>
-                    <h3 class="slide-title">Add Your Reel Title Here</h3>
-                    <p class="slide-desc">Describe this reel's story here — who was the client, what was the goal, and what results were achieved through the edit.</p>
-                    <button class="slide-btn sound-hover" data-slide="3">
-                        Watch Reel <i class="fas fa-play"></i>
-                    </button>
+                    <div class="slide-num">04</div>
+                    <span class="slide-tag">Event Highlight</span>
+                    <h3 class="slide-title">Event Promo for Siddharth Rajsekar</h3>
+                    <p class="slide-desc">High-energy event promotional reel edited for India’s leading business coach, featuring cinematic pacing and seamless transitions.</p>
+                    <button class="slide-btn sound-hover" data-slide="3">Watch Reel <i class="fas fa-play"></i></button>
                 </div>
             </div>
 
-            <!-- SLIDE 4 — GOOGLE DRIVE -->
+            <!-- SLIDE 4 (original, now slide 5) -->
             <div class="swiper-slide">
                 <div class="slide-visual">
                     <iframe class="slide-iframe"
@@ -519,32 +509,73 @@
                             frameborder="0"></iframe>
                 </div>
                 <div class="slide-content">
-                    <div class="slide-num">04</div>
-                    <span class="slide-tag">Music Video</span>
-                    <h3 class="slide-title">Add Your Project Name Here</h3>
-                    <p class="slide-desc">Add your project details here — client information, editing style, and a brief description of what makes this piece stand out.</p>
+                    <div class="slide-num">05</div>
+                    <span class="slide-tag">Motion Design</span>
+                    <h3 class="slide-title">Motion Graphics & Visual Design Showreel</h3>
+                    <p class="slide-desc">Advanced motion design showcase with kinetic typography, complex masking, and smooth keyframe animations for premium brands.</p>
                     <button class="slide-btn sound-hover" data-slide="4">Watch Reel <i class="fas fa-play"></i></button>
                 </div>
             </div>
 
-            <!-- SLIDE 5 — NEW (ADDED) -->
+            <!-- SLIDE 5 (original, now slide 6) -->
             <div class="swiper-slide">
                 <div class="slide-visual">
                     <iframe class="slide-iframe"
                             id="slide-iframe-5"
                             data-video-type="vimeo"
                             src="https://play.gumlet.io/embed/69f5f0b6609709b32f7c416b?background=false&autoplay=false&loop=false&disable_player_controls=false"
-            
                             allow="autoplay; fullscreen; picture-in-picture"
                             allowfullscreen
                             frameborder="0"></iframe>
                 </div>
                 <div class="slide-content">
-                    <div class="slide-num">05</div>
-                    <span class="slide-tag">Your Tag Here</span>
-                    <h3 class="slide-title">Add Your Reel Title Here</h3>
-                    <p class="slide-desc">Describe this reel's story here — who was the client, what was the goal, and what results were achieved through the edit.</p>
+                    <div class="slide-num">06</div>
+                    <span class="slide-tag">Social Impact</span>
+                    <h3 class="slide-title">Women Empowerment Feature</h3>
+                    <p class="slide-desc">A powerful social media feature focusing on emotional storytelling and impactful sound design to amplify female leadership.</p>
                     <button class="slide-btn sound-hover" data-slide="5">Watch Reel <i class="fas fa-play"></i></button>
+                </div>
+            </div>
+
+            <!-- NEW SLIDE 7 (at the end) -->
+            <div class="swiper-slide">
+                <div class="slide-visual">
+                    <iframe class="slide-iframe"
+                            id="slide-iframe-6"
+                            data-video-type="drive"
+                            src="https://play.gumlet.io/embed/69f625051dfaccdc956d2448?background=false&autoplay=false&loop=false&disable_player_controls=false"
+
+                            allow="autoplay; fullscreen"
+                            allowfullscreen
+                            frameborder="0"></iframe>
+                </div>
+                <div class="slide-content">
+                    <div class="slide-num">07</div>
+                    <span class="slide-tag">Event Promo</span>
+                    <h3 class="slide-title">Event Hype Film for Ritu Agarwal</h3>
+                    <p class="slide-desc">A high-energy promotional film created to generate massive buzz for a major live event by prominent content creator Ritu Agarwal. This edit focuses on rhythmic pacing, vibrant transitions, and immersive sound design to build peak audience anticipation.</p>
+                    <button class="slide-btn sound-hover" data-slide="6">Watch Reel <i class="fas fa-play"></i></button>
+                </div>
+            </div>
+
+            <!-- NEW SLIDE 8 (at the end) -->
+            <div class="swiper-slide">
+                <div class="slide-visual">
+                    <iframe class="slide-iframe"
+                            id="slide-iframe-7"
+                            data-video-type="vimeo"
+                            src="https://play.gumlet.io/embed/69f62505609709b32f7f1564?background=false&autoplay=false&loop=false&disable_player_controls=false"
+
+                            allow="autoplay; fullscreen; picture-in-picture"
+                            allowfullscreen
+                            frameborder="0"></iframe>
+                </div>
+                <div class="slide-content">
+                    <div class="slide-num">08</div>
+                    <span class="slide-tag">Cinematic Storytelling</span>
+                    <h3 class="slide-title">Chronicles of Delhi: A Cinematic Short</h3>
+                    <p class="slide-desc">An artistic exploration of Delhi’s rich heritage, told through fast-paced cinematic cuts and evocative storytelling. This personal project highlights advanced montage techniques, moody color grading, and a deep focus on cultural narrative.</p>
+                    <button class="slide-btn sound-hover" data-slide="7">Watch Reel <i class="fas fa-play"></i></button>
                 </div>
             </div>
 
@@ -624,54 +655,12 @@
         <p style="color:var(--muted);font-size:0.9rem;max-width:300px;text-align:right;line-height:1.7;">Brands and creators I've had the pleasure of working with — elevating their content to the next level.</p>
     </div>
     <div class="clients-grid">
-        <div class="client-card" data-delay="0">
-            <img class="client-bg" src="https://i.postimg.cc/jj88SnWj/IMG-6001.png" alt="@siddharthrajsekar">
-            <div class="client-dark-vignette"></div>
-            <div class="client-verified"><i class="fas fa-check"></i></div>
-            <div class="insta-bar"><div class="insta-avatar">C1</div><div><div class="insta-name">@siddharthrajsekar</div><div class="insta-follow">● Collab</div></div></div>
-            <div class="client-num">01</div>
-            <div class="client-card-overlay"><div class="client-card-handle"><i class="fab fa-instagram"></i> @siddharthrajsekar</div><div class="client-card-desc">Ai Business Coach · 199K+</div></div>
-        </div>
-        <div class="client-card" data-delay="80">
-            <img class="client-bg" src="https://i.postimg.cc/GhQvRwT3/IMG-5999.png" alt="@ritubihaniagarwal">
-            <div class="client-dark-vignette"></div>
-            <div class="client-verified"><i class="fas fa-check"></i></div>
-            <div class="insta-bar"><div class="insta-avatar">C2</div><div><div class="insta-name">@ritubihaniagarwal</div><div class="insta-follow">● Collab</div></div></div>
-            <div class="client-num">02</div>
-            <div class="client-card-overlay"><div class="client-card-handle"><i class="fab fa-instagram"></i> @ritubihaniagarwal</div><div class="client-card-desc">Content Creator · 300K+</div></div>
-        </div>
-        <div class="client-card" data-delay="160">
-            <img class="client-bg" src="https://i.postimg.cc/zG4vZ07C/IMG-6002.png" alt="@cafeconsultant_rajneesh">
-            <div class="client-dark-vignette"></div>
-            <div class="client-verified"><i class="fas fa-check"></i></div>
-            <div class="insta-bar"><div class="insta-avatar">B1</div><div><div class="insta-name">@cafeconsultant_rajneesh</div><div class="insta-follow">● Collab</div></div></div>
-            <div class="client-num">03</div>
-            <div class="client-card-overlay"><div class="client-card-handle"><i class="fab fa-instagram"></i> @cafeconsultant_rajneesh</div><div class="client-card-desc">Cafe Consultant · 45K+</div></div>
-        </div>
-        <div class="client-card" data-delay="0">
-            <img class="client-bg" src="https://i.postimg.cc/qBmkH1BZ/IMG-6003.png" alt="@jrsofficial_">
-            <div class="client-dark-vignette"></div>
-            <div class="client-verified"><i class="fas fa-check"></i></div>
-            <div class="insta-bar"><div class="insta-avatar">FB</div><div><div class="insta-name">@jrsofficial_</div><div class="insta-follow">● Collab</div></div></div>
-            <div class="client-num">04</div>
-            <div class="client-card-overlay"><div class="client-card-handle"><i class="fab fa-instagram"></i> @jrsofficial_</div><div class="client-card-desc">Entrepreneur · 2K</div></div>
-        </div>
-        <div class="client-card" data-delay="80">
-            <img class="client-bg" src="https://i.postimg.cc/KYq2hzxT/IMG-6004.png" alt="@digitalviveksharma">
-            <div class="client-dark-vignette"></div>
-            <div class="client-verified"><i class="fas fa-check"></i></div>
-            <div class="insta-bar"><div class="insta-avatar">TR</div><div><div class="insta-name">@digitalviveksharma</div><div class="insta-follow">● Collab</div></div></div>
-            <div class="client-num">05</div>
-            <div class="client-card-overlay"><div class="client-card-handle"><i class="fab fa-instagram"></i> @digitalviveksharma</div><div class="client-card-desc">Business Coach · 5K</div></div>
-        </div>
-        <div class="client-card" data-delay="160">
-            <img class="client-bg" src="https://i.postimg.cc/RFtJW2PT/IMG-6010.png" alt="@pankajsinghfounder">
-            <div class="client-dark-vignette"></div>
-            <div class="client-verified"><i class="fas fa-check"></i></div>
-            <div class="insta-bar"><div class="insta-avatar">T1</div><div><div class="insta-name">@pankajsinghfounder</div><div class="insta-follow">● Collab</div></div></div>
-            <div class="client-num">06</div>
-            <div class="client-card-overlay"><div class="client-card-handle"><i class="fab fa-instagram"></i> @pankajsinghfounder</div><div class="client-card-desc">Founder</div></div>
-        </div>
+        <div class="client-card" data-delay="0"><img class="client-bg" src="https://i.postimg.cc/jj88SnWj/IMG-6001.png" alt="@siddharthrajsekar"><div class="client-dark-vignette"></div><div class="client-verified"><i class="fas fa-check"></i></div><div class="insta-bar"><div class="insta-avatar">C1</div><div><div class="insta-name">@siddharthrajsekar</div><div class="insta-follow">● Collab</div></div></div><div class="client-num">01</div><div class="client-card-overlay"><div class="client-card-handle"><i class="fab fa-instagram"></i> @siddharthrajsekar</div><div class="client-card-desc">Ai Business Coach · 199K+</div></div></div>
+        <div class="client-card" data-delay="80"><img class="client-bg" src="https://i.postimg.cc/GhQvRwT3/IMG-5999.png" alt="@ritubihaniagarwal"><div class="client-dark-vignette"></div><div class="client-verified"><i class="fas fa-check"></i></div><div class="insta-bar"><div class="insta-avatar">C2</div><div><div class="insta-name">@ritubihaniagarwal</div><div class="insta-follow">● Collab</div></div></div><div class="client-num">02</div><div class="client-card-overlay"><div class="client-card-handle"><i class="fab fa-instagram"></i> @ritubihaniagarwal</div><div class="client-card-desc">Content Creator · 300K+</div></div></div>
+        <div class="client-card" data-delay="160"><img class="client-bg" src="https://i.postimg.cc/zG4vZ07C/IMG-6002.png" alt="@cafeconsultant_rajneesh"><div class="client-dark-vignette"></div><div class="client-verified"><i class="fas fa-check"></i></div><div class="insta-bar"><div class="insta-avatar">B1</div><div><div class="insta-name">@cafeconsultant_rajneesh</div><div class="insta-follow">● Collab</div></div></div><div class="client-num">03</div><div class="client-card-overlay"><div class="client-card-handle"><i class="fab fa-instagram"></i> @cafeconsultant_rajneesh</div><div class="client-card-desc">Cafe Consultant · 45K+</div></div></div>
+        <div class="client-card" data-delay="0"><img class="client-bg" src="https://i.postimg.cc/qBmkH1BZ/IMG-6003.png" alt="@jrsofficial_"><div class="client-dark-vignette"></div><div class="client-verified"><i class="fas fa-check"></i></div><div class="insta-bar"><div class="insta-avatar">FB</div><div><div class="insta-name">@jrsofficial_</div><div class="insta-follow">● Collab</div></div></div><div class="client-num">04</div><div class="client-card-overlay"><div class="client-card-handle"><i class="fab fa-instagram"></i> @jrsofficial_</div><div class="client-card-desc">Entrepreneur · 2K</div></div></div>
+        <div class="client-card" data-delay="80"><img class="client-bg" src="https://i.postimg.cc/KYq2hzxT/IMG-6004.png" alt="@digitalviveksharma"><div class="client-dark-vignette"></div><div class="client-verified"><i class="fas fa-check"></i></div><div class="insta-bar"><div class="insta-avatar">TR</div><div><div class="insta-name">@digitalviveksharma</div><div class="insta-follow">● Collab</div></div></div><div class="client-num">05</div><div class="client-card-overlay"><div class="client-card-handle"><i class="fab fa-instagram"></i> @digitalviveksharma</div><div class="client-card-desc">Business Coach · 5K</div></div></div>
+        <div class="client-card" data-delay="160"><img class="client-bg" src="https://i.postimg.cc/RFtJW2PT/IMG-6010.png" alt="@pankajsinghfounder"><div class="client-dark-vignette"></div><div class="client-verified"><i class="fas fa-check"></i></div><div class="insta-bar"><div class="insta-avatar">T1</div><div><div class="insta-name">@pankajsinghfounder</div><div class="insta-follow">● Collab</div></div></div><div class="client-num">06</div><div class="client-card-overlay"><div class="client-card-handle"><i class="fab fa-instagram"></i> @pankajsinghfounder</div><div class="client-card-desc">Founder</div></div></div>
     </div>
     <div class="clients-marquee-wrap">
         <div class="clients-marquee">
@@ -711,7 +700,6 @@
         <p style="color:var(--muted);font-size:0.9rem;max-width:280px;text-align:right;line-height:1.7;">All your common questions — answered in one place.</p>
     </div>
     <div class="faq-grid reveal">
-        <!-- NEW FAQ ITEM (TOP) -->
         <div class="faq-item">
             <div class="faq-question" onclick="toggleFaq(this)">
                 <div class="faq-q-left"><span class="faq-num">01</span><span class="faq-q-text">Can I get a free sample / demo edit to see your quality?</span></div>
@@ -719,7 +707,6 @@
             </div>
             <div class="faq-answer"><div class="faq-answer-inner">Absolutely! I'm happy to do a small <strong>demo sample edit</strong> so you can experience my editing style and quality firsthand. It's a great way to see if we're a good fit before moving to a full project. Just reach out and we'll work out the details.</div></div>
         </div>
-
         <div class="faq-item">
             <div class="faq-question" onclick="toggleFaq(this)">
                 <div class="faq-q-left"><span class="faq-num">02</span><span class="faq-q-text">How long does it take to edit one video?</span></div>
@@ -762,8 +749,7 @@
 <section id="about" class="about-section">
     <div class="about-layout">
         <div class="about-image reveal">
-            <img src="https://i.postimg.cc/DzbPjtMk/IMG-4863-JPG-(1).jpg" alt="Sohil Khan - Video Editor"
-                 style="width:100%;height:100%;object-fit:cover;display:block;border-radius:12px;">
+            <img src="https://i.postimg.cc/DzbPjtMk/IMG-4863-JPG-(1).jpg" alt="Sohil Khan - Video Editor" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:12px;">
             <div class="about-frame"></div>
             <div class="about-tag-badge"><span>5+</span>Years<br>Experience</div>
         </div>
@@ -778,37 +764,16 @@
     </div>
 </section>
 
-<!-- CONTACT -->
+<!-- CONTACT (form removed, only info & socials) -->
 <section id="contact" class="contact-section">
-    <div class="contact-layout">
-        <div class="contact-left reveal">
-            <h2 class="contact-heading">Let's Create<br>Something <span>Great.</span></h2>
-            <p class="contact-desc">Have a new project? Looking to collaborate? Or just want to talk? I'm right here — let's make something amazing together.</p>
-            <div class="contact-detail"><div class="contact-ic"><i class="fas fa-envelope"></i></div><div class="contact-detail-text"><h4>Email</h4><p>sohilkhan971170@gmail.com</p></div></div>
-            <div class="contact-detail"><div class="contact-ic"><i class="fas fa-phone-alt"></i></div><div class="contact-detail-text"><h4>Phone / WhatsApp</h4><p>+91 8368398129</p></div></div>
-            <div class="contact-detail"><div class="contact-ic"><i class="fas fa-map-marker-alt"></i></div><div class="contact-detail-text"><h4>Location</h4><p>South Delhi, India</p></div></div>
-            <div class="socials">
-                <a href="https://www.instagram.com/" class="social-btn"><i class="fab fa-instagram"></i></a>
-                <!-- <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
-                <a href="#" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#" class="social-btn"><i class="fab fa-behance"></i></a> -->
-            </div>
-        </div>
-        <div class="contact-right reveal reveal-delay-2">
-            <form class="contact-form" id="contactForm">
-                <div class="form-row">
-                    <div class="form-group"><label class="form-label">Full Name</label><input class="form-input" type="text" name="name" required></div>
-                    <div class="form-group"><label class="form-label">Email</label><input class="form-input" type="email" name="email" required></div>
-                </div>
-                <div class="form-group"><label class="form-label">Project Type</label><input class="form-input" type="text" name="project_type" placeholder="e.g. Instagram Reels, Short Film..."></div>
-                <div class="form-group"><label class="form-label">Message</label><textarea class="form-textarea" name="message" required></textarea></div>
-                <button type="submit" class="submit-btn sound-hover">Send Message <i class="fas fa-paper-plane"></i></button>
-            </form>
-            <div class="thankyou-msg" id="thankyouMsg">
-                <div class="ty-icon">🎬</div>
-                <h3>Message Received!</h3>
-                <p>"Your vision is in my inbox.<br>Let's create magic soon."</p>
-            </div>
+    <div class="contact-centered reveal">
+        <h2 class="contact-heading">Let's Create<br>Something <span>Great.</span></h2>
+        <p class="contact-desc">Have a new project? Looking to collaborate? Or just want to talk? I'm right here — let's make something amazing together.</p>
+        <div class="contact-detail"><div class="contact-ic"><i class="fas fa-envelope"></i></div><div class="contact-detail-text"><h4>Email</h4><p>sohilkhan971170@gmail.com</p></div></div>
+        <div class="contact-detail"><div class="contact-ic"><i class="fas fa-phone-alt"></i></div><div class="contact-detail-text"><h4>Phone / WhatsApp</h4><p>+91 8368398129</p></div></div>
+        <div class="contact-detail"><div class="contact-ic"><i class="fas fa-map-marker-alt"></i></div><div class="contact-detail-text"><h4>Location</h4><p>South Delhi, India</p></div></div>
+        <div class="socials">
+            <a href="https://www.instagram.com/" class="social-btn"><i class="fab fa-instagram"></i></a>
         </div>
     </div>
 </section>
@@ -849,7 +814,7 @@ if (!isTouchDevice()) {
     let mX=0,mY=0,cX=0,cY=0,rX=0,rY=0;
     document.addEventListener('mousemove',e=>{mX=e.clientX;mY=e.clientY;});
     (function updateCursor(){ cX+=(mX-cX)*.35; cY+=(mY-cY)*.35; rX+=(mX-rX)*.18; rY+=(mY-rY)*.18; cursor.style.left=(cX-5)+'px'; cursor.style.top=(cY-5)+'px'; ring.style.left=(rX-21)+'px'; ring.style.top=(rY-21)+'px'; requestAnimationFrame(updateCursor); })();
-    document.querySelectorAll('a,button,.hero-btn-main,.hero-btn-sec,.submit-btn,.social-btn,.slide-btn,.back-to-top,.mobile-menu-btn,.swiper-button-next,.swiper-button-prev,.skill-slide-card,.client-card,.faq-question,.reel-card-inner').forEach(el=>{
+    document.querySelectorAll('a,button,.hero-btn-main,.hero-btn-sec,.submit-btn,.social-btn,.slide-btn,.back-to-top,.mobile-menu-btn,.swiper-button-next,.swiper-button-prev,.skill-slide-card,.client-card,.faq-question,.reel-card-inner,.hero-image-card').forEach(el=>{
         el.addEventListener('mouseenter',()=>{cursor.classList.add('hovered');ring.classList.add('hovered');});
         el.addEventListener('mouseleave',()=>{cursor.classList.remove('hovered');ring.classList.remove('hovered');});
     });
@@ -874,14 +839,7 @@ window.addEventListener('mousemove',e=>{
     heroBgText.style.transform=`translate(calc(-50% + ${mx}px),calc(-50% + ${my}px))`;
 });
 
-// ── REEL CARD 3D TILT ──
-const rcw=document.getElementById('reelCardWrapper'), rci=document.getElementById('reelCardInner');
-if(rcw&&!isTouchDevice()){
-    rcw.addEventListener('mousemove',e=>{const r=rcw.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top,cx=r.width/2,cy=r.height/2; rci.style.transform=`rotateX(${((y-cy)/cy)*-12}deg) rotateY(${((x-cx)/cx)*12}deg)`;});
-    rcw.addEventListener('mouseleave',()=>{rci.style.transform='rotateX(0deg) rotateY(0deg)';});
-}
-
-// ── VIDEO MANAGER (simplified, no slide overlays needed) ──
+// ── VIDEO MANAGER (simplified, no hero overlay) ──
 const vimeoPlayers = {};
 
 function pauseAllVimeo(exceptId){
@@ -904,7 +862,6 @@ function pauseAllYTLazy(exceptWrapId){
 
 function pauseAll(exceptId){ pauseAllVimeo(exceptId); pauseAllYTLazy(exceptId); }
 
-// YouTube lazy load (only used if needed, no overlay interaction)
 function injectYouTubePlayer(wrapEl){
     if(!wrapEl) return;
     const ytId  = wrapEl.dataset.ytId;
@@ -924,12 +881,12 @@ function injectYouTubePlayer(wrapEl){
     wrapEl.appendChild(iframe);
 }
 
-// ── Watch Reel buttons (no overlay to hide, just play video) ──
+// ── Watch Reel buttons ──
 document.querySelectorAll('.slide-btn').forEach(btn=>{
     btn.addEventListener('click',e=>{
         e.preventDefault();
-        const slideNum  = btn.dataset.slide;
-        const slide     = btn.closest('.swiper-slide');
+        const slideNum = btn.dataset.slide;
+        const slide    = btn.closest('.swiper-slide');
         if(!slide) return;
         const ytWrap = slide.querySelector('.yt-lazy-wrap');
         if(ytWrap){
@@ -945,39 +902,19 @@ document.querySelectorAll('.slide-btn').forEach(btn=>{
         if(type==='vimeo' && vimeoPlayers[id]){
             vimeoPlayers[id].setMuted(false).then(()=>vimeoPlayers[id].play()).catch(()=>{});
         }
-        // For drive/other, the iframe already contains own controls; user can interact after pauseAll
     });
 });
 
-// ── VIMEO (no overlay-related listeners for slides) ──
+// ── VIMEO INIT (no hero overlay involved) ──
 function initVimeoPlayers(){
     if(typeof Vimeo==='undefined'||typeof Vimeo.Player==='undefined'){
         setTimeout(initVimeoPlayers,300); return;
     }
-    const heroIframe  = document.getElementById('heroVimeoIframe');
-    const heroOverlay = document.getElementById('vimeoOverlay');
-    if(heroIframe){
-        let heroPlayer;
-        try{
-            heroPlayer = new Vimeo.Player(heroIframe);
-            heroPlayer.on('play', ()=>{ heroOverlay.classList.add('hidden'); });
-            heroPlayer.on('pause',()=>{ heroOverlay.classList.remove('hidden'); });
-            rci.addEventListener('click',()=>{
-                if(!heroPlayer) return;
-                heroPlayer.getPaused().then(paused=>{
-                    paused ? heroPlayer.setMuted(false).then(()=>heroPlayer.play()).catch(()=>{})
-                           : heroPlayer.pause();
-                }).catch(()=>{});
-            });
-        }catch(e){ console.warn('Hero Vimeo init error:',e); }
-    }
-    // Init slide Vimeo players without overlay click handlers
     document.querySelectorAll('.slide-iframe[data-video-type="vimeo"]').forEach(iframe=>{
         const id=iframe.id;
         try{
             const player=new Vimeo.Player(iframe);
             vimeoPlayers[id]=player;
-            // No overlay events needed
         }catch(e){ console.warn('Vimeo slide init error:',id,e); }
     });
 }
@@ -1097,16 +1034,6 @@ const mmb=document.getElementById('mobileMenuBtn'),mn=document.getElementById('m
 mmb.addEventListener('click',()=>{ mn.classList.toggle('active'); mmb.innerHTML=mn.classList.contains('active')?'<i class="fas fa-times"></i>':'<i class="fas fa-bars"></i>'; });
 document.querySelectorAll('.mobile-nav-links a').forEach(a=>a.addEventListener('click',()=>{ mn.classList.remove('active'); mmb.innerHTML='<i class="fas fa-bars"></i>'; }));
 
-// ── CONTACT FORM ──
-const cForm=document.getElementById('contactForm'),tyMsg=document.getElementById('thankyouMsg');
-cForm.addEventListener('submit',async function(e){
-    e.preventDefault();
-    const btn=cForm.querySelector('.submit-btn'); btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Sending...'; btn.disabled=true;
-    await new Promise(r=>setTimeout(r,1400));
-    cForm.style.opacity='0'; cForm.style.transition='opacity 0.4s';
-    setTimeout(()=>{ cForm.style.display='none'; tyMsg.classList.add('active'); },400);
-});
-
 // ── BACK TO TOP ──
 const btt=document.getElementById('backToTop');
 window.addEventListener('scroll',()=>btt.classList.toggle('visible',scrollY>400));
@@ -1119,11 +1046,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
         const target=document.querySelector(href);
         if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth',block:'start'}); }
     });
-});
-document.getElementById('vimeoOverlay').addEventListener('click', function () {
-    const iframe = document.getElementById('heroVimeoIframe');
-    iframe.src = "https://play.gumlet.io/embed/69f5b957609709b32f788ff8?autoplay=true&mute=false";
-    this.style.display = "none";
 });
 </script>
 </body>
