@@ -123,10 +123,14 @@
         .section-label { font-size:0.66rem; letter-spacing:5px; text-transform:uppercase; color:var(--accent); margin-bottom:16px; display:block; }
         .section-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(42px,5vw,72px); letter-spacing:3px; line-height:0.93; }
 
-        /* SWIPER */
+        /* ── SWIPER – VERTICAL SLIDES (default, slides 1-7) ── */
         .swiper-section { padding:140px 80px 140px; position:relative; z-index:2; }
-        .swiper { border-radius:16px; overflow:hidden; border:1px solid var(--border); height:580px; box-shadow:0 20px 60px rgba(0,0,0,0.5); }
-        .swiper-slide { display:grid; grid-template-columns:420px 1fr; background:var(--card); height:100%; }
+        .swiper { border-radius:16px; overflow:hidden; border:1px solid var(--border); height:820px; box-shadow:0 20px 60px rgba(0,0,0,0.5); }
+        .swiper-slide { display:grid; grid-template-columns:560px 1fr; background:var(--card); height:100%; }
+
+        /* ── SLIDE 8 OVERRIDE – horizontal/cinematic ── */
+        .swiper-slide.slide-horiz { grid-template-columns:420px 1fr; }
+
         .slide-visual { position:relative; overflow:hidden; background:#000; width:100%; height:100%; flex-shrink:0; }
         .slide-iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:none; z-index:1; display:block; }
 
@@ -306,7 +310,9 @@
             .swiper-section { padding:60px 28px 80px; }
             .swiper { height:auto; }
             .swiper-slide { grid-template-columns:1fr; }
-            .slide-visual { width:100%; aspect-ratio:16/9; height:auto; min-height:220px; }
+            .swiper-slide.slide-horiz { grid-template-columns:1fr; }
+            .slide-visual { width:100%; aspect-ratio:9/16; height:auto; min-height:280px; }
+            .swiper-slide.slide-horiz .slide-visual { aspect-ratio:16/9; min-height:220px; }
             .slide-content { padding:36px 28px; }
             .services-grid { grid-template-columns:1fr; }
             .clients-grid { grid-template-columns:repeat(2,1fr); gap:14px; }
@@ -421,7 +427,7 @@
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
 
-            <!-- SLIDE 1 (existing) -->
+            <!-- SLIDE 1 -->
             <div class="swiper-slide">
                 <div class="slide-visual">
                     <iframe class="slide-iframe"
@@ -441,33 +447,33 @@
                 </div>
             </div>
 
-<div class="swiper-slide">
-    <div class="slide-visual">
-        <iframe class="slide-iframe"
-                id="slide-iframe-2"
-                data-video-type="drive"
-                src="https://play.gumlet.io/embed/69f5b957609709b32f788ff8?background=false&autoplay=false&loop=false&disable_player_controls=false"
-
-                allow="autoplay; fullscreen"
-                allowfullscreen
-                frameborder="0"></iframe>
-    </div>
-    <div class="slide-content">
-        <div class="slide-num">02</div>
-        <span class="slide-tag">Luxury Real Estate</span>
-        <h3 class="slide-title">International Real Estate Showcase</h3>
-        <p class="slide-desc">A high-end real estate promo featuring cinematic typography and clean visual storytelling. This project focuses on high-retention editing techniques tailored for global property markets and luxury real estate branding.</p>
-        <button class="slide-btn sound-hover" data-slide="2">
-            Watch Reel <i class="fas fa-play"></i>
-        </button>
-    </div>
-</div>
-
-            <!-- SLIDE 2 (original, now slide 3) -->
+            <!-- SLIDE 2 -->
             <div class="swiper-slide">
                 <div class="slide-visual">
                     <iframe class="slide-iframe"
                             id="slide-iframe-2"
+                            data-video-type="drive"
+                            src="https://play.gumlet.io/embed/69f5b957609709b32f788ff8?background=false&autoplay=false&loop=false&disable_player_controls=false"
+                            allow="autoplay; fullscreen"
+                            allowfullscreen
+                            frameborder="0"></iframe>
+                </div>
+                <div class="slide-content">
+                    <div class="slide-num">02</div>
+                    <span class="slide-tag">Luxury Real Estate</span>
+                    <h3 class="slide-title">International Real Estate Showcase</h3>
+                    <p class="slide-desc">A high-end real estate promo featuring cinematic typography and clean visual storytelling. This project focuses on high-retention editing techniques tailored for global property markets and luxury real estate branding.</p>
+                    <button class="slide-btn sound-hover" data-slide="2">
+                        Watch Reel <i class="fas fa-play"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- SLIDE 3 -->
+            <div class="swiper-slide">
+                <div class="slide-visual">
+                    <iframe class="slide-iframe"
+                            id="slide-iframe-3"
                             data-video-type="drive"
                             src="https://play.gumlet.io/embed/69f5d135609709b32f7a388c?background=false&autoplay=false&loop=false&disable_player_controls=false"
                             allow="autoplay; fullscreen"
@@ -479,15 +485,15 @@
                     <span class="slide-tag">Performance Marketing</span>
                     <h3 class="slide-title">Trading & Finance Meta Ad</h3>
                     <p class="slide-desc">High-converting Meta Ad edited for a professional trading mentor. Designed with dynamic call-outs and clean graphics to simplify complex market behavior.</p>
-                    <button class="slide-btn sound-hover" data-slide="2">Watch Reel <i class="fas fa-play"></i></button>
+                    <button class="slide-btn sound-hover" data-slide="3">Watch Reel <i class="fas fa-play"></i></button>
                 </div>
             </div>
 
-            <!-- SLIDE 3 (original, now slide 4) -->
+            <!-- SLIDE 4 -->
             <div class="swiper-slide">
                 <div class="slide-visual">
                     <iframe class="slide-iframe"
-                            id="slide-iframe-3"
+                            id="slide-iframe-4"
                             data-video-type="drive"
                             src="https://play.gumlet.io/embed/69f5cfe2c530a8d6d2e32b68?background=false&autoplay=false&loop=false&disable_player_controls=false"
                             allow="autoplay; fullscreen"
@@ -498,16 +504,16 @@
                     <div class="slide-num">04</div>
                     <span class="slide-tag">Event Highlight</span>
                     <h3 class="slide-title">Event Promo for Siddharth Rajsekar</h3>
-                    <p class="slide-desc">High-energy event promotional reel edited for India’s leading business coach, featuring cinematic pacing and seamless transitions.</p>
-                    <button class="slide-btn sound-hover" data-slide="3">Watch Reel <i class="fas fa-play"></i></button>
+                    <p class="slide-desc">High-energy event promotional reel edited for India's leading business coach, featuring cinematic pacing and seamless transitions.</p>
+                    <button class="slide-btn sound-hover" data-slide="4">Watch Reel <i class="fas fa-play"></i></button>
                 </div>
             </div>
 
-            <!-- SLIDE 4 (original, now slide 5) -->
+            <!-- SLIDE 5 -->
             <div class="swiper-slide">
                 <div class="slide-visual">
                     <iframe class="slide-iframe"
-                            id="slide-iframe-4"
+                            id="slide-iframe-5"
                             data-video-type="drive"
                             src="https://player.vimeo.com/video/1186968805?badge=0&autopause=0&player_id=heroVimeoIframe&app_id=58479&autoplay=0&muted=0&loop=1&title=0&byline=0&portrait=0"
                             allow="autoplay; fullscreen"
@@ -519,15 +525,15 @@
                     <span class="slide-tag">Motion Design</span>
                     <h3 class="slide-title">Motion Graphics & Visual Design Showreel</h3>
                     <p class="slide-desc">Advanced motion design showcase with kinetic typography, complex masking, and smooth keyframe animations for premium brands.</p>
-                    <button class="slide-btn sound-hover" data-slide="4">Watch Reel <i class="fas fa-play"></i></button>
+                    <button class="slide-btn sound-hover" data-slide="5">Watch Reel <i class="fas fa-play"></i></button>
                 </div>
             </div>
 
-            <!-- SLIDE 5 (original, now slide 6) -->
+            <!-- SLIDE 6 -->
             <div class="swiper-slide">
                 <div class="slide-visual">
                     <iframe class="slide-iframe"
-                            id="slide-iframe-5"
+                            id="slide-iframe-6"
                             data-video-type="vimeo"
                             src="https://play.gumlet.io/embed/69f5f0b6609709b32f7c416b?background=false&autoplay=false&loop=false&disable_player_controls=false"
                             allow="autoplay; fullscreen; picture-in-picture"
@@ -539,18 +545,17 @@
                     <span class="slide-tag">Social Impact</span>
                     <h3 class="slide-title">Women Empowerment Feature</h3>
                     <p class="slide-desc">A powerful social media feature focusing on emotional storytelling and impactful sound design to amplify female leadership.</p>
-                    <button class="slide-btn sound-hover" data-slide="5">Watch Reel <i class="fas fa-play"></i></button>
+                    <button class="slide-btn sound-hover" data-slide="6">Watch Reel <i class="fas fa-play"></i></button>
                 </div>
             </div>
 
-            <!-- NEW SLIDE 7 (at the end) -->
+            <!-- SLIDE 7 -->
             <div class="swiper-slide">
                 <div class="slide-visual">
                     <iframe class="slide-iframe"
-                            id="slide-iframe-6"
+                            id="slide-iframe-7"
                             data-video-type="drive"
                             src="https://play.gumlet.io/embed/69f625051dfaccdc956d2448?background=false&autoplay=false&loop=false&disable_player_controls=false"
-
                             allow="autoplay; fullscreen"
                             allowfullscreen
                             frameborder="0"></iframe>
@@ -560,18 +565,17 @@
                     <span class="slide-tag">Event Promo</span>
                     <h3 class="slide-title">Event Hype Film for Ritu Agarwal</h3>
                     <p class="slide-desc">A high-energy promotional film created to generate massive buzz for a major live event by prominent content creator Ritu Agarwal. This edit focuses on rhythmic pacing, vibrant transitions, and immersive sound design to build peak audience anticipation.</p>
-                    <button class="slide-btn sound-hover" data-slide="6">Watch Reel <i class="fas fa-play"></i></button>
+                    <button class="slide-btn sound-hover" data-slide="7">Watch Reel <i class="fas fa-play"></i></button>
                 </div>
             </div>
 
-            <!-- NEW SLIDE 8 (at the end) -->
-            <div class="swiper-slide">
+            <!-- SLIDE 8 — horizontal/cinematic, original smaller size -->
+            <div class="swiper-slide slide-horiz">
                 <div class="slide-visual">
                     <iframe class="slide-iframe"
-                            id="slide-iframe-7"
+                            id="slide-iframe-8"
                             data-video-type="vimeo"
                             src="https://play.gumlet.io/embed/69f62505609709b32f7f1564?background=false&autoplay=false&loop=false&disable_player_controls=false"
-
                             allow="autoplay; fullscreen; picture-in-picture"
                             allowfullscreen
                             frameborder="0"></iframe>
@@ -580,8 +584,8 @@
                     <div class="slide-num">08</div>
                     <span class="slide-tag">Cinematic Storytelling</span>
                     <h3 class="slide-title">Chronicles of Delhi: A Cinematic Short</h3>
-                    <p class="slide-desc">An artistic exploration of Delhi’s rich heritage, told through fast-paced cinematic cuts and evocative storytelling. This personal project highlights advanced montage techniques, moody color grading, and a deep focus on cultural narrative.</p>
-                    <button class="slide-btn sound-hover" data-slide="7">Watch Reel <i class="fas fa-play"></i></button>
+                    <p class="slide-desc">An artistic exploration of Delhi's rich heritage, told through fast-paced cinematic cuts and evocative storytelling. This personal project highlights advanced montage techniques, moody color grading, and a deep focus on cultural narrative.</p>
+                    <button class="slide-btn sound-hover" data-slide="8">Watch Reel <i class="fas fa-play"></i></button>
                 </div>
             </div>
 
@@ -770,7 +774,7 @@
     </div>
 </section>
 
-<!-- CONTACT (form removed, only info & socials) -->
+<!-- CONTACT -->
 <section id="contact" class="contact-section">
     <div class="contact-centered reveal">
         <h2 class="contact-heading">Let's Create<br>Something <span>Great.</span></h2>
@@ -845,7 +849,7 @@ window.addEventListener('mousemove',e=>{
     heroBgText.style.transform=`translate(calc(-50% + ${mx}px),calc(-50% + ${my}px))`;
 });
 
-// ── VIDEO MANAGER (simplified, no hero overlay) ──
+// ── VIDEO MANAGER ──
 const vimeoPlayers = {};
 
 function pauseAllVimeo(exceptId){
@@ -891,7 +895,6 @@ function injectYouTubePlayer(wrapEl){
 document.querySelectorAll('.slide-btn').forEach(btn=>{
     btn.addEventListener('click',e=>{
         e.preventDefault();
-        const slideNum = btn.dataset.slide;
         const slide    = btn.closest('.swiper-slide');
         if(!slide) return;
         const ytWrap = slide.querySelector('.yt-lazy-wrap');
@@ -911,7 +914,7 @@ document.querySelectorAll('.slide-btn').forEach(btn=>{
     });
 });
 
-// ── VIMEO INIT (no hero overlay involved) ──
+// ── VIMEO INIT ──
 function initVimeoPlayers(){
     if(typeof Vimeo==='undefined'||typeof Vimeo.Player==='undefined'){
         setTimeout(initVimeoPlayers,300); return;
